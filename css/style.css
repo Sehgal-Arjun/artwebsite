@@ -43,7 +43,7 @@ a {
   transition: .3s all;
   color: #ff8c1c; }
   a:hover, a:focus, a:active {
-    color: #b2c251;
+    color: #ff8c1c;
     text-decoration: none; }
 
 .parent-nav-link-padding, .site-navbar .navbar-nav > li > a {
