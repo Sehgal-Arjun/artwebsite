@@ -6,6 +6,45 @@ body {
   font-size: 16px;
   font-weight: 300; }
 
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  max-height: 50px;
+  /*background: rgba(255,140,28,0.5);*/
+  background: rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  border-radius: 60px;
+  padding: 10px 20px;
+}
+.search-bar input{
+  background: transparent;
+  flex:1;
+  border: 0;
+  outline: none;
+  padding: 24px 20px;
+  font-size:20px;
+  color:rgb(0, 0, 0)
+}
+
+.search-bar button img{
+  width: 29px;
+  padding-right: 1.5px;
+  padding-bottom: 1.5px;
+}
+.search-bar button{
+  border:0;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  background:rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.search-bar button:hover{
+  background: rgba(255,140,28,0.5);
+}
+
 .p1-gradient-bg, .thumb .overlay-bg {
   background: -moz-linear-gradient(0deg, #8490ff 0%, #62bdfc 100%);
   background: -webkit-linear-gradient(0deg, #8490ff 0%, #62bdfc 100%);
