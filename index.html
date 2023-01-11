@@ -13,10 +13,10 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700" rel="stylesheet">
 
-
+	<script src="js/index-scripts.js"></script>
 </head>
 <body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
-
+	
 
 
 	<nav class="navbar navbar-expand-lg site-navbar navbar-light bg-light" id="pb-navbar">
@@ -69,8 +69,8 @@
 					<li data-filter=".kindergarten">Kindergarten</li>					
 				</ul>
 				<ul>
-					<li><form action="" class="search-bar">
-						<input type="text" placeholder="Or, search by artist..." name="search">
+					<li><form onclick = "{searching()}" onsubmit= "return false" action="" class="search-bar">
+						<input type="text" placeholder="Or, search by artist..." id="searchbar">
       					<button type="submit"><img src = "images/search.png"></button>
 					</form></li>
 				</ul>
@@ -78,8 +78,8 @@
 			
 
 			<div class="filters-content">
-				<div class="row grid">
-					<div class="single-portfolio col-sm-4 all perry_chen mellonlibrary photography">
+				<div id = "artcontent" class="row grid">
+					<section artist = "perry_chen" class="single-portfolio col-sm-4 all mellonlibrary photography">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -95,8 +95,8 @@
 							<h4>Perry Chen</h4>
 							<div class="cat">Mellon Library</div>
 						</div>                                         
-					</div>
-					<div class="single-portfolio col-sm-4 all ava_porter learningcommons painting">
+					</section>
+					<section artist = "ava_porter" class="single-portfolio col-sm-4 all ava_porter learningcommons painting">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -112,8 +112,8 @@
 							<h4>Ava Porter</h4>
 							<div class="cat">Learning Commons</div>
 						</div>                                         
-					</div>                            
-					<div class="single-portfolio col-sm-4 all perry_chen green photography">
+					</section>                            
+					<section artist = "perry_chen" class="single-portfolio col-sm-4 all perry_chen green photography">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -130,8 +130,8 @@
 							<h4>Perry Chen</h4>
 							<div class="cat">Green Staircase</div>
 						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all perry_chen commons photography">
+					</section>
+					<section artist = "ella_jackson-drexler" class="single-portfolio col-sm-4 all perry_chen commons photography">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -147,8 +147,8 @@
 							<h4>Ella Jackson-Drexler</h4>
 							<div class="cat">Commons</div>
 						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all ava_porter learningcommons painting">
+					</section>
+					<section artist = "ava_porter" class="single-portfolio col-sm-4 all ava_porter learningcommons painting">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -164,8 +164,8 @@
 							<h4>Ava Porter</h4>
 							<div class="cat">Learning Commons</div>
 						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all perry_chen orange photography">
+					</section>
+					<section artist = "ella_jackson-drexler" class="single-portfolio col-sm-4 all perry_chen orange photography">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -181,8 +181,8 @@
 							<h4>Ella Jackson-Drexler</h4>
 							<div class="cat">Top Orange</div>
 						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all perry_chen blue photography">
+					</section>
+					<section artist = "perry_chen" class="single-portfolio col-sm-4 all perry_chen blue photography">
 						<div class="relative">
 							<div class="thumb">
 								<div class="overlay overlay-bg"></div>
@@ -198,7 +198,7 @@
 							<h4>Perry Chen</h4>
 							<div class="cat">Blue Staircase</div>
 						</div>
-					</div>
+					</section>
 				</div>
 			</div>
 		</div>
@@ -241,6 +241,5 @@
 	<!-- Google Map -->
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     	<script src="js/google-map.js"></script> -->
-
-    </body>
+	</body>
     </html>
