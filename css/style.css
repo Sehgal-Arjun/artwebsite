@@ -6,6 +6,10 @@ body {
   font-size: 16px;
   font-weight: 300; }
 
+img {
+  cursor: pointer;
+}
+
 .search-bar {
   width: 100%;
   max-width: 500px;
