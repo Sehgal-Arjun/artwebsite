@@ -10,6 +10,10 @@ img {
   cursor: pointer;
 }
 
+.row {
+  min-height: 300px;
+}
+
 .search-bar {
   width: 100%;
   max-width: 500px;

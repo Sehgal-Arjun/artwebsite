@@ -15,12 +15,12 @@ function searching(){
 
     if (userinput !== "" && userinput !== null && userinput.length !== 0){
 
-        const divs = document.querySelectorAll('div');
+       /* const divs = document.querySelectorAll('div');
         for (let element of divs){
             if (element.classList.contains('classname')){
                 element.style.display = 'none';
             }
-        }
+        }*/
 
         userinput = userinput.toLowerCase();
         userinput = userinput.replace(/ /g,"_");
@@ -30,7 +30,7 @@ function searching(){
         [...elements].forEach((element) => {
             if (element.getAttribute('artist').includes(userinput)){
                 list.push(counter);
-            }     
+            }
             counter = counter + 1;   
         });
         let indexlist = [];
