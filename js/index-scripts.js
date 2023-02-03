@@ -97,8 +97,10 @@ onValue(artRef, (snapshot) => {
         let enddiv3 = '</div';
         let artistname = '<h4>' + artist + '</h4>';
         let locationtext = '<div class="cat">' + element.location + '</div>';
+        let centeringdiv1 = '<div class="centervertically">';
+        let centeringdiv2 = '</div>';
 
-        document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + endsection;
+        document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + centeringdiv1 + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + centeringdiv2 + endsection;
 
         console.log(startsection);
 
