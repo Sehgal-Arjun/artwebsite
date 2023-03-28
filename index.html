@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ASL Art</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/flexslider.css">
+	<link rel="stylesheet" href="fonts/icomoon/style.css">
+
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700" rel="stylesheet">
+
+	<script src="js/index-scripts.js" defer type="module"></script>
+	<script src="js/clickscripts.js" defer type="module"></script>
+	<script src = "js/filtercontent.js" defer></script>
+</head>
+<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+	<nav class="navbar navbar-expand-lg site-navbar navbar-light bg-light" id="pb-navbar">
+		<div class="container collapse navbar-collapse justify-content-md-center justify-content-sm-start" id="navbarsExample09">
+			<div class="container collapse navbar-collapse justify-content-md-center" id="navbarsExample09">
+				
+				<strong class="d-block text-white text-uppercase letter-spacing2"><a href="https://www.asl.org">Back to ASL Website</a></strong>		
+				
+			</div>
+		</div>
+	</nav>
+
+	<section class="site-hero" style="background-image: url(https://images.adsttc.com/media/images/5835/8776/e58e/ce9f/3000/0464/newsletter/ASL_3_Marcus_Peel_0712.jpg?1479903081);" data-stellar-background-ratio="0.5">
+		<div class="container">
+			<div class="row intro-text align-items-center justify-content-center">
+				<div class="col-md-10 text-center pt-5">
+
+					<h1 class="site-heading site-animate">The American School in London's <strong class="d-block">Student Art</strong></h1>
+					<strong class="d-block text-white text-uppercase letter-spacing">take a look below</strong>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="site-section" id="section-portfolio">
+		<div class="buttoncontainer" style="padding-bottom:20px;">
+			<div></div>
+			<div class = "g-sign-in-button">
+				<div id = "loginbutton" class = "content-wrapper">
+					<div class = "logo-wrapper">
+						<img src = "https://developers.google.com/identity/images/g-logo.png">
+					</div>
+					<span class = "buttontext-container">
+						<span id = "signintext">Sign in with Google</span>
+					</span>
+				</div>
+			</div>
+			<div></div>
+		</div>
+		<div id="forauthorized">
+			<!-- stuff here for people who are authorized to make changes! -->
+			<div class="buttoncontainer" style="padding-bottom:20px;">
+				<div class="leftgriddiv">
+					<div></div>
+					<div class = "g-sign-in-button">
+						<div id ="uploadnewworkbutton" class = "content-wrapper">
+							<div class = "logo-wrapper">
+								<img src = "/images/uploadcontent.png">
+							</div>
+							<span class = "editbutton">Enter New Artwork</span>
+						</div>
+					</div>
+					<div></div>
+				</div>
+				<div></div>
+				<div class="leftgriddiv">
+					<div></div>
+					<div class = "g-sign-in-button">
+						<div class = "content-wrapper">
+							<div class = "logo-wrapper">
+								<img src = "/images/editcontent.png">
+							</div>
+							<span class = "editbutton">Edit or Delete Artwork</span>
+						</div>
+					</div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="filters">
+				<ul>
+					<li onclick="filterSelection('all')">All</li>
+  					<li onclick="filterSelection('mellonlibrary')">Mellon Library</li>
+					<li onclick="filterSelection('learningcommons')">Learning Commons</li>
+					<li onclick="filterSelection('blue')">Blue</li>
+					<li onclick="filterSelection('orange')">Orange</li>
+					<li onclick="filterSelection('yellow')">Yellow</li>
+					<li onclick="filterSelection('green')">Green</li>
+					<li onclick="filterSelection('red')">Red</li>
+					<li onclick="filterSelection('commons')">Commons</li>
+					<li onclick="filterSelection('artbuilding')">Art Building</li>
+					<li onclick="filterSelection('lowerschool')">Lower School</li>
+					<li onclick="filterSelection('middleschool')">Middle School</li>
+					<li onclick="filterSelection('orange')">Kindergarten</li>
+					<li onclick="filterSelection('storage')">Storage</li>					
+				</ul>
+				<ul>
+					<li><form onclick = "{searching()}" onsubmit= "return false" action="" class="search-bar">
+						<input type="text" placeholder="Or, search by artist..." id="searchbar">
+      					<button type="submit"><img src = "images/search.png"></button>
+					</form></li>
+				</ul>
+			</div>
+			
+			
+			<div id = "allart" class = "allart">
+				<div class="section-heading text-center col-md-12 classname">
+					<h2>Test Section</strong></h2>
+				</div>
+				<div class="filters-content">
+					<div id = "artcontent" class="row grid"> <!-- CHANGE THIS ID TO artcontent FOR DATABASE UPDATE-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--<section id="footersectionid">
+
+	</section>-->
+
+	<script src="js/vendor/jquery.min.js" defer></script>
+	<script src="js/vendor/jquery-migrate-3.0.1.min.js" defer></script>
+	<script src="js/vendor/popper.min.js" defer></script>
+	<script src="js/vendor/bootstrap.min.js" defer></script>
+
+	<script src="js/vendor/jquery.easing.1.3.js" defer></script>
+
+	<script src="js/vendor/jquery.stellar.min.js" defer></script>
+	<script src="js/vendor/jquery.waypoints.min.js" defer></script>
+
+	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js" defer></script>
+	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js" defer></script>
+	<script src="js/custom.js" defer></script>
+
+	<!-- Google Map -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    	<script src="js/google-map.js"></script> -->
+	</body>
+    </html>
