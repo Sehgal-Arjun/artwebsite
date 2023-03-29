@@ -167,10 +167,15 @@ onAuthStateChanged(auth, (user) => {
 
             if (!authenticated){
                 let namearr = element.artist.split('');
-                let artistarr = namearr.filter(function(char) {
-                    return /[A-Z]/.test(char);
-                });
-                artist = artistarr.join('');
+                var tempname = [];
+                for (const element of namearr){
+                    if (element == " ") { tempname.push("."); }
+                    if (element == "-") { tempname.push("-"); }
+                    if (element == "_") { tempname.push("_"); }
+                    if (element != element.toLowerCase()) { tempname.push(element); }
+                }
+
+                artist = tempname.join('');
             }
             
             let year = element.year;
@@ -238,18 +243,13 @@ onAuthStateChanged(auth, (user) => {
 
 });
 
-function openDetails(){
-    if (auth.currentUser == null) {
-        authorized = false;
-    }
-    else {
-        authorized = true;
-    }
-    /* IF YOU ARE SIGNED IN */ 
-    if (authorized){
+setInterval(function(){ 
 
+    let images = document.getElementsByClassName("image")
+    for (const element of images){
+        element.addEventListener('click', function(){
+            console.log(element.currentSrc);
+            window.open(element.currentSrc);
+        });
     }
-    else{
-        window.open(this.src)
-    }
-}
+}, 3000);
