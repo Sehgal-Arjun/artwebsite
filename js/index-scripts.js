@@ -9,7 +9,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 
 var loggedin;
 var authenticated;
-var teacher = true; // NEED TO CHECK IMPLEMENT THIS
+var authemails = [];
+var teacher = false; // NEED TO CHECK IMPLEMENT THIS
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -28,6 +29,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 const artRef = ref(db, 'art/');
+const authenticatedusersRef = ref(db, 'authenticatedusers/');
 
 const loginbutton = document.getElementById('loginbutton');
 loginbutton.addEventListener('click', router);
@@ -61,7 +63,6 @@ function googlelogin(){
     });
 }
 
-export {auth};
 
 function googlelogout(){
     console.log('log out button called!');
@@ -103,7 +104,7 @@ onAuthStateChanged(auth, (user) => {
         authenticated = false;
     }
 
-    onValue(artRef, (snapshot) => {
+    onValue(authenticatedusersRef, (snapshot) => {
         const data = snapshot.val();
         let content = [];
         for (var key in data) {
@@ -111,118 +112,141 @@ onAuthStateChanged(auth, (user) => {
               content.push(data[key]);
             }
         }
-        console.log(content);
-    
-        const shuffledContent = content.sort((a, b) => 0.5 - Math.random());
-    
-        shuffledContent.forEach((element) => {
-            let loc = element.location;
-            let tags = [];
-            if (loc.toLowerCase().includes('mellon library')){
-                tags.push('mellonlibrary')
-            }
-            if (loc.toLowerCase().includes('learning commons')){
-                tags.push('learningcommons')
-            }
-            if (loc.toLowerCase().includes('blue')){
-                tags.push('blue');
-            }
-            if (loc.toLowerCase().includes('orange')){
-                tags.push('orange');
-            }
-            if (loc.toLowerCase().includes('yellow')){
-                tags.push('yellow');
-            }
-            if (loc.toLowerCase().includes('green')){
-                tags.push('green');
-            }
-            if (loc.toLowerCase().includes('red')){
-                tags.push('red');
-            }
-            if (loc.toLowerCase().includes('commons')){
-                tags.push('commons');
-            }
-            if (loc.toLowerCase().includes('orange')){
-                tags.push('orange');
-            }
-            if (loc.toLowerCase().includes('art building')){
-                tags.push('artbuilding');
-            }
-            if (loc.toLowerCase().includes('lower school')){
-                tags.push('lowerschool');
-            }
-            if (loc.toLowerCase().includes('middle school')){
-                tags.push('middleschool');
-            }
-            if (loc.toLowerCase().includes('kindergarten')){
-                tags.push('kindergarten');
-            }
-            if (loc.toLowerCase().includes('storage')){
-                tags.push('storage');
-            }
-            let tagstring = tags.join(' '); 
-    
-            let artist = element.artist;
-            let fixedartist = artist.toLowerCase().replace(/ /g,"_");
-
-            if (!authenticated){
-                let namearr = element.artist.split('');
-                var tempname = [];
-                for (const element of namearr){
-                    if (element == " ") { tempname.push("."); }
-                    if (element == "-") { tempname.push("-"); }
-                    if (element == "_") { tempname.push("_"); }
-                    if (element != element.toLowerCase()) { tempname.push(element); }
+        authemails = content;
+        console.log(authemails);
+        for (let i = 0; i < authemails.length; i++){
+            if (user){ // user is signed in
+                console.log(user.email);
+                if (authemails[i].email == user.email){
+                    teacher = true;
                 }
-
-                artist = tempname.join('');
             }
             
-            let year = element.year;
-            if (year == null || year == undefined || year == "0000"){
-                year = "year?";
-            }
+        }
+        console.log('teacher: ' + teacher);
+        //console.log(authemails);
+    
 
-            let startsection = '<section artist = "' + fixedartist + '" class="filterDiv single-portfolio col-sm-4 all ' + tagstring + '">';
-            let endsection = '</section>';
-            let startimgdiv1 = '<div class="relative">';
-            let endimgdiv1 = '</div>';
-            let startimgdiv2 = '<div class="thumb">';
-            let endimgdiv2 = '</div>';
-            let middleimgdiv = '<div class="overlay overlay-bg"></div>';
-            let img = '<img class="image img-fluid" src="' + element.url + '" alt="" >'; // onclick="openDetails()" goes before the >
-            let startdiv3 = '<div class="p-inner">';
-            let enddiv3 = '</div';
-            let artistname = '<h4>' + artist + '</h4>';
-            let locationtext = '<div class="cat">' + element.location +" "+ "‧" + " " + year + '</div>';
-    
-            document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + endsection;
-    
-            console.log(startsection);
-    
-            let currimages = 0;
-            console.log(document.getElementsByTagName('img').length);
-    
-            if(document.getElementsByTagName('img').length == content.length){
-                
-                //footer creation here!
-                let startfooter = '<footer class="site-footer" id = "footer">';
-                let startfooterdiv1 = '<div class="container">';
-                let startfooterdiv2 = '<div class="row mb-5">';
-                let startfooterdiv3 = '<div class="col-md-12 text-center">';
-                let startp = '<p>';
-                let website = '<a href="https://www.facebook.com/americanschoolinlondon" class="social-item"><span class="icon-facebook2"></span></a>';
-                let twitter = '<a href="https://twitter.com/aslnews" class="social-item"><span class="icon-twitter"></span></a>';
-                let instagram = '<a href="https://www.instagram.com/asinlondon/" class="social-item"><span class="icon-instagram2"></span></a>';
-                let endp = '</p>';
-                let enddiv = '</div>';
-                let endfooter = '</footer>';
-    
-                //document.getElementById('footersectionid').innerHTML = startfooter + startfooterdiv1 + startfooterdiv2 + startfooterdiv3 + startp + website + twitter + instagram + endp + enddiv + enddiv + enddiv + endfooter;
-    
+        onValue(artRef, (snapshot) => {
+            const data = snapshot.val();
+            let content = [];
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                content.push(data[key]);
+                }
             }
+            //console.log(content);
+        
+            const shuffledContent = content.sort((a, b) => 0.5 - Math.random());
+        
+            shuffledContent.forEach((element) => {
+                let loc = element.location;
+                let tags = [];
+                if (loc.toLowerCase().includes('mellon library')){
+                    tags.push('mellonlibrary')
+                }
+                if (loc.toLowerCase().includes('learning commons')){
+                    tags.push('learningcommons')
+                }
+                if (loc.toLowerCase().includes('blue')){
+                    tags.push('blue');
+                }
+                if (loc.toLowerCase().includes('orange')){
+                    tags.push('orange');
+                }
+                if (loc.toLowerCase().includes('yellow')){
+                    tags.push('yellow');
+                }
+                if (loc.toLowerCase().includes('green')){
+                    tags.push('green');
+                }
+                if (loc.toLowerCase().includes('red')){
+                    tags.push('red');
+                }
+                if (loc.toLowerCase().includes('commons')){
+                    tags.push('commons');
+                }
+                if (loc.toLowerCase().includes('orange')){
+                    tags.push('orange');
+                }
+                if (loc.toLowerCase().includes('art building')){
+                    tags.push('artbuilding');
+                }
+                if (loc.toLowerCase().includes('lower school')){
+                    tags.push('lowerschool');
+                }
+                if (loc.toLowerCase().includes('middle school')){
+                    tags.push('middleschool');
+                }
+                if (loc.toLowerCase().includes('kindergarten')){
+                    tags.push('kindergarten');
+                }
+                if (loc.toLowerCase().includes('storage')){
+                    tags.push('storage');
+                }
+                let tagstring = tags.join(' '); 
+        
+                let artist = element.artist;
+                let fixedartist = artist.toLowerCase().replace(/ /g,"_");
+
+                if (!authenticated){
+                    let namearr = element.artist.split('');
+                    var tempname = [];
+                    for (const element of namearr){
+                        if (element == " ") { tempname.push("."); }
+                        if (element == "-") { tempname.push("-"); }
+                        if (element == "_") { tempname.push("_"); }
+                        if (element != element.toLowerCase()) { tempname.push(element); }
+                    }
+
+                    artist = tempname.join('');
+                }
+                
+                let year = element.year;
+                if (year == null || year == undefined || year == "0000"){
+                    year = "year?";
+                }
+
+                let startsection = '<section artist = "' + fixedartist + '" class="filterDiv single-portfolio col-sm-4 all ' + tagstring + '">';
+                let endsection = '</section>';
+                let startimgdiv1 = '<div class="relative">';
+                let endimgdiv1 = '</div>';
+                let startimgdiv2 = '<div class="thumb">';
+                let endimgdiv2 = '</div>';
+                let middleimgdiv = '<div class="overlay overlay-bg"></div>';
+                let img = '<img class="image img-fluid" src="' + element.url + '" alt="" >'; // onclick="openDetails()" goes before the >
+                let startdiv3 = '<div class="p-inner">';
+                let enddiv3 = '</div';
+                let artistname = '<h4>' + artist + '</h4>';
+                let locationtext = '<div class="cat">' + element.location +" "+ "‧" + " " + year + '</div>';
+        
+                document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + endsection;
+        
+                //console.log(startsection);
+        
+                let currimages = 0;
+                //console.log(document.getElementsByTagName('img').length);
+        
+                if(document.getElementsByTagName('img').length == content.length){
+                    
+                    //footer creation here!
+                    let startfooter = '<footer class="site-footer" id = "footer">';
+                    let startfooterdiv1 = '<div class="container">';
+                    let startfooterdiv2 = '<div class="row mb-5">';
+                    let startfooterdiv3 = '<div class="col-md-12 text-center">';
+                    let startp = '<p>';
+                    let website = '<a href="https://www.facebook.com/americanschoolinlondon" class="social-item"><span class="icon-facebook2"></span></a>';
+                    let twitter = '<a href="https://twitter.com/aslnews" class="social-item"><span class="icon-twitter"></span></a>';
+                    let instagram = '<a href="https://www.instagram.com/asinlondon/" class="social-item"><span class="icon-instagram2"></span></a>';
+                    let endp = '</p>';
+                    let enddiv = '</div>';
+                    let endfooter = '</footer>';
+        
+                    //document.getElementById('footersectionid').innerHTML = startfooter + startfooterdiv1 + startfooterdiv2 + startfooterdiv3 + startp + website + twitter + instagram + endp + enddiv + enddiv + enddiv + endfooter;
+        
+                }
+            })
         })
-    })
 
     console.log('authenitcated: ' + authenticated);
 
@@ -237,9 +261,18 @@ onAuthStateChanged(auth, (user) => {
     function uploadfunction(){
         location.replace("./inputpage.html");
     }
+
+    function neweittorfunction(){
+        console.log("auofh");
+        location.replace("./addeditors.html");
+    }
     
     let uploadbutton = document.getElementById("uploadnewworkbutton");
     uploadbutton.addEventListener('click', uploadfunction);
+
+    let neweditorbutton = document.getElementById("addneweditorsbutton");
+    neweditorbutton.addEventListener('click', neweittorfunction);
+    });
 
 });
 

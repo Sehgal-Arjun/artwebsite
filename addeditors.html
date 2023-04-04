@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add New Editors</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/inputpage.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/addeditors.css">
+
+        <script src = "js/filtercontent.js" defer></script>
+        <script defer type="module" src="js/neweditors.js"></script>
+    </head>
+    <body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+        
+        <div class="container">
+
+            <div class="input">
+                <button onsubmit= "return false" action="" id = "backbutton" class="action-button">Back to Art Gallery</button>
+            </div>
+
+            <div class="container" style="width:70%; text-align: center;" id="currenteditorscontainer">
+                <h3><b>Current Editors:</b></h3>
+                <p>arjun_sehgal@asl.org</p>
+            </div>
+           
+            <div class="card">
+                <div class="card-image">	
+                </div>
+                <form class="card-form" onsubmit= "return false" action="">
+                    <div class="input">
+                        <input type="text" id = 'newemail' class="input-field" placeholder="Enter Email" required/>
+                    </div>                    
+
+                    <div class="input">
+                        <button id = "inputbutton" class="action-button">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
