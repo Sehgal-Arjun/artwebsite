@@ -29,21 +29,23 @@ backbtn.addEventListener('click', function(){
 onValue(authemailsref, (snapshot) => {
     const data = snapshot.val();
     let emails = [];
-    for (var key in data) {
+    for (let key in data) {
         if (data.hasOwnProperty(key)) {
             emails.push(data[key]);
         }
     }
+    
     for (let i = 0; i < emails.length; i++){
         if (emails[i].email == "arjun_sehgal@asl.org"){
             emails.splice(i, 1);
         }
     }
+    //console.log(emails);
 
     let currenteditorsdiv = document.getElementById('currenteditorscontainer');
     let htmltext = currenteditorsdiv.innerHTML;
-    for (let i = 0; i < emails.length; i++){
-        htmltext = htmltext + '<span class="spanitem">' + emails[i].email + "</span>" +"<br>";
+    for (const element of emails){
+        htmltext = htmltext + '<span class="spanitem">' + element.email + "</span>" +"<br>";
     }
     currenteditorsdiv.innerHTML = htmltext;
 
@@ -53,10 +55,11 @@ onValue(authemailsref, (snapshot) => {
         if (!emails.includes(newauthemail) && newauthemail.length != 0){
             let emailkey = "email" + emails.length;
             let key = 'authenticatedusers/' + emailkey;
-            // REPLACE CURRENT DATABASE CONTENT / MAKE NEW DATABASE CONTENT (change 'art/perry1' to 'art/____')
             set(ref(db, key), {
-                email: document.getElementById('newemail').value
+                email: document.getElementById('newemail').value,
+                index: emails.length
             });
+            location.reload();
         }
         
     }
@@ -69,25 +72,48 @@ onValue(authemailsref, (snapshot) => {
         let spans = document.getElementsByClassName("spanitem");
         for (const element of spans){
             element.onclick = function(){
+                let emailnum = 0;
                 let reference = "";
                 for (let i = 0; i < emails.length; i++){
                     if (emails[i].email == element.innerHTML){
                         reference = "email" + i;
+                        emails.splice(i, 1);
+                        emailnum = i;
                     }
                 }
 
                 if (reference != ""){
                     let key = "/authenticatedusers/" + reference + "/";
-                    remove(ref(db, key)).then(() => {
+                    console.log('key: ' + key);
+                    remove(ref(db, key)).then(() => { // eg, key could be "/authenticatedusers/email0/"
                         console.log('removed!');
-                    })
+                    });
                     /*
                     console.log(key);
                     let deleteref = ref(db, key);
                     set(ref(db, deleteref), {email:null});*/
+                    console.log('emailnum: ' + emailnum);
+                    console.log(emails);
+                    for (let i = emailnum; i < emails.length; i++){
+                        let newref = "email" + (emails[i].index - 1);
+                        let newkey = "/authenticatedusers/" + newref + "/";
+                        let oldkey = "/authenticatedusers/email" + emails[i].index + "/";
+                        console.log('oldkey: ' + oldkey);
+                        remove(ref(db, oldkey)).then(() => {
+                            console.log('removed!');
+                            set(ref(db, newkey), {
+                                email: emails[i].email,
+                                index: i
+                            }).then(() => {
+                                location.reload();
+                            })
+                        });
+                    }
+
                 }
-    
+                
                 console.log(element.innerHTML);
+                //location.reload();
             }
         }
     }, 100);
