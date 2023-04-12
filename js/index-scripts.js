@@ -169,7 +169,9 @@ onAuthStateChanged(auth, (user) => {
             }
 
             console.log(classes);
-        
+            
+            document.getElementById('allart').innerHTML = "";
+
             classes.forEach((listofart) => {
                 console.log(listofart);
 
