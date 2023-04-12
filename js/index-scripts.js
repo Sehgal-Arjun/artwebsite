@@ -114,10 +114,10 @@ onAuthStateChanged(auth, (user) => {
         }
         authemails = content;
         console.log(authemails);
-        for (let i = 0; i < authemails.length; i++){
+        for (const element of authemails){
             if (user){ // user is signed in
                 console.log(user.email);
-                if (authemails[i].email == user.email){
+                if (element.email == user.email){
                     teacher = true;
                 }
             }
@@ -138,115 +138,175 @@ onAuthStateChanged(auth, (user) => {
             //console.log(content);
         
             const shuffledContent = content.sort((a, b) => 0.5 - Math.random());
-        
-            shuffledContent.forEach((element) => {
-                let loc = element.location;
-                let tags = [];
-                if (loc.toLowerCase().includes('mellon library')){
-                    tags.push('mellonlibrary')
-                }
-                if (loc.toLowerCase().includes('learning commons')){
-                    tags.push('learningcommons')
-                }
-                if (loc.toLowerCase().includes('blue')){
-                    tags.push('blue');
-                }
-                if (loc.toLowerCase().includes('orange')){
-                    tags.push('orange');
-                }
-                if (loc.toLowerCase().includes('yellow')){
-                    tags.push('yellow');
-                }
-                if (loc.toLowerCase().includes('green')){
-                    tags.push('green');
-                }
-                if (loc.toLowerCase().includes('red')){
-                    tags.push('red');
-                }
-                if (loc.toLowerCase().includes('commons')){
-                    tags.push('commons');
-                }
-                if (loc.toLowerCase().includes('orange')){
-                    tags.push('orange');
-                }
-                if (loc.toLowerCase().includes('art building')){
-                    tags.push('artbuilding');
-                }
-                if (loc.toLowerCase().includes('lower school')){
-                    tags.push('lowerschool');
-                }
-                if (loc.toLowerCase().includes('middle school')){
-                    tags.push('middleschool');
-                }
-                if (loc.toLowerCase().includes('kindergarten')){
-                    tags.push('kindergarten');
-                }
-                if (loc.toLowerCase().includes('storage')){
-                    tags.push('storage');
-                }
-                let tagstring = tags.join(' '); 
-        
-                let artist = element.artist;
-                let fixedartist = artist.toLowerCase().replace(/ /g,"_");
 
-                if (!authenticated){
-                    let namearr = element.artist.split('');
-                    var tempname = [];
-                    for (const element of namearr){
-                        if (element == " ") { tempname.push("."); }
-                        if (element == "-") { tempname.push("-"); }
-                        if (element == "_") { tempname.push("_"); }
-                        if (element != element.toLowerCase()) { tempname.push(element); }
+            if (shuffledContent[0].class != 'Permanent Collection'){
+                let index = 0;
+                for (let i = 0; i < shuffledContent.length; i++){
+                    if (shuffledContent[i].class == 'Permanent Collection'){
+                        index = i;
+                        return;
                     }
+                }
+                let temp = shuffledContent[0];
+                shuffledContent[0] = shuffledContent[index];
+                shuffledContent[index] = temp;
+            }
 
-                    artist = tempname.join('');
+            let classlist = [];
+            let classes = [];
+            for (const element of shuffledContent){
+                if (!classlist.includes(element.class)){ classlist.push(element.class);}
+            }
+
+            for (const element of classlist){
+                let currclasslist = [];
+                for (let j = 0; j < shuffledContent.length; j++){
+                    if (shuffledContent[j].class == element){
+                        currclasslist.push(shuffledContent[j]);
+                    }
+                }
+                classes.push(currclasslist);
+            }
+
+            console.log(classes);
+        
+            classes.forEach((listofart) => {
+                console.log(listofart);
+
+                let maindiv = document.getElementById('allart');
+
+                let newclassnamediv = document.createElement('div');
+                newclassnamediv.className = 'section-heading text-center col-md-12 classname';
+                newclassnamediv.id = 'classnamediv';
+                if (listofart[0].class == 'Permanent Collection'){
+                    newclassnamediv.innerHTML = "<h2><strong>" + listofart[0].class + "</strong></h2>";
+                }
+                else{
+                    newclassnamediv.innerHTML = "<h2>" + listofart[0].class + "</h2>";
                 }
                 
-                let year = element.year;
-                if (year == null || year == undefined || year == "0000"){
-                    year = "year?";
-                }
+                maindiv.appendChild(newclassnamediv);
 
-                let startsection = '<section artist = "' + fixedartist + '" class="filterDiv single-portfolio col-sm-4 all ' + tagstring + '">';
-                let endsection = '</section>';
-                let startimgdiv1 = '<div class="relative">';
-                let endimgdiv1 = '</div>';
-                let startimgdiv2 = '<div class="thumb">';
-                let endimgdiv2 = '</div>';
-                let middleimgdiv = '<div class="overlay overlay-bg"></div>';
-                let img = '<img class="image img-fluid" src="' + element.url + '" alt="" >'; // onclick="openDetails()" goes before the >
-                let startdiv3 = '<div class="p-inner">';
-                let enddiv3 = '</div';
-                let artistname = '<h4>' + artist + '</h4>';
-                let locationtext = '<div class="cat">' + element.location +" "+ "‧" + " " + year + '</div>';
-        
-                document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + endsection;
-        
-                //console.log(startsection);
-        
-                let currimages = 0;
-                //console.log(document.getElementsByTagName('img').length);
-        
-                if(document.getElementsByTagName('img').length == content.length){
+                let newartdiv = document.createElement('div');
+                newartdiv.className = 'filters-content';
+                let newartcontentdiv = document.createElement('div');
+                newartcontentdiv.className = 'row grid';
+                newartcontentdiv.id = 'artcontent';
+                newartdiv.appendChild(newartcontentdiv);
+                maindiv.appendChild(newartdiv);
+
+                listofart.forEach((element) => {
+            
+                    let loc = element.location;
+                    let tags = [];
+                    if (loc.toLowerCase().includes('mellon library')){
+                        tags.push('mellonlibrary')
+                    }
+                    if (loc.toLowerCase().includes('learning commons')){
+                        tags.push('learningcommons')
+                    }
+                    if (loc.toLowerCase().includes('blue')){
+                        tags.push('blue');
+                    }
+                    if (loc.toLowerCase().includes('orange')){
+                        tags.push('orange');
+                    }
+                    if (loc.toLowerCase().includes('yellow')){
+                        tags.push('yellow');
+                    }
+                    if (loc.toLowerCase().includes('green')){
+                        tags.push('green');
+                    }
+                    if (loc.toLowerCase().includes('red')){
+                        tags.push('red');
+                    }
+                    if (loc.toLowerCase().includes('commons')){
+                        tags.push('commons');
+                    }
+                    if (loc.toLowerCase().includes('orange')){
+                        tags.push('orange');
+                    }
+                    if (loc.toLowerCase().includes('art building')){
+                        tags.push('artbuilding');
+                    }
+                    if (loc.toLowerCase().includes('lower school')){
+                        tags.push('lowerschool');
+                    }
+                    if (loc.toLowerCase().includes('middle school')){
+                        tags.push('middleschool');
+                    }
+                    if (loc.toLowerCase().includes('kindergarten')){
+                        tags.push('kindergarten');
+                    }
+                    if (loc.toLowerCase().includes('storage')){
+                        tags.push('storage');
+                    }
+                    let tagstring = tags.join(' '); 
+            
+                    let artist = element.artist;
+                    let fixedartist = artist.toLowerCase().replace(/ /g,"_");
+    
+                    if (!authenticated){
+                        let namearr = element.artist.split('');
+                        var tempname = [];
+                        for (const element of namearr){
+                            if (element == " ") { tempname.push("."); }
+                            if (element == "-") { tempname.push("-"); }
+                            if (element == "_") { tempname.push("_"); }
+                            if (element != element.toLowerCase()) { tempname.push(element); }
+                        }
+    
+                        artist = tempname.join('');
+                    }
                     
-                    //footer creation here!
-                    let startfooter = '<footer class="site-footer" id = "footer">';
-                    let startfooterdiv1 = '<div class="container">';
-                    let startfooterdiv2 = '<div class="row mb-5">';
-                    let startfooterdiv3 = '<div class="col-md-12 text-center">';
-                    let startp = '<p>';
-                    let website = '<a href="https://www.facebook.com/americanschoolinlondon" class="social-item"><span class="icon-facebook2"></span></a>';
-                    let twitter = '<a href="https://twitter.com/aslnews" class="social-item"><span class="icon-twitter"></span></a>';
-                    let instagram = '<a href="https://www.instagram.com/asinlondon/" class="social-item"><span class="icon-instagram2"></span></a>';
-                    let endp = '</p>';
-                    let enddiv = '</div>';
-                    let endfooter = '</footer>';
-        
-                    //document.getElementById('footersectionid').innerHTML = startfooter + startfooterdiv1 + startfooterdiv2 + startfooterdiv3 + startp + website + twitter + instagram + endp + enddiv + enddiv + enddiv + endfooter;
-        
-                }
+                    let year = element.year;
+                    if (year == null || year == undefined || year == "0000"){
+                        year = "year?";
+                    }
+    
+                    let startsection = '<section artist = "' + fixedartist + '" class="filterDiv single-portfolio col-sm-4 all ' + tagstring + '">';
+                    let endsection = '</section>';
+                    let startimgdiv1 = '<div class="relative">';
+                    let endimgdiv1 = '</div>';
+                    let startimgdiv2 = '<div class="thumb">';
+                    let endimgdiv2 = '</div>';
+                    let middleimgdiv = '<div class="overlay overlay-bg"></div>';
+                    let img = '<img class="image img-fluid" src="' + element.url + '" alt="" >'; // onclick="openDetails()" goes before the >
+                    let startdiv3 = '<div class="p-inner">';
+                    let enddiv3 = '</div';
+                    let artistname = '<h4>' + artist + '</h4>';
+                    let locationtext = '<div class="cat">' + element.location +" "+ "‧" + " " + year + '</div>';
+            
+                    document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + endsection;
+
+                    //console.log(startsection);
+            
+                    let currimages = 0;
+                    //console.log(document.getElementsByTagName('img').length);
+            
+                    if(document.getElementsByTagName('img').length == content.length){
+                        
+                        //footer creation here!
+                        let startfooter = '<footer class="site-footer" id = "footer">';
+                        let startfooterdiv1 = '<div class="container">';
+                        let startfooterdiv2 = '<div class=" mb-5">';
+                        let startfooterdiv3 = '<div class="col-md-12 text-center">';
+                        let startp = '<p>';
+                        let website = '<a href="https://www.facebook.com/americanschoolinlondon" class="social-item"><span class="icon-facebook2"></span></a>';
+                        let twitter = '<a href="https://twitter.com/aslnews" class="social-item"><span class="icon-twitter"></span></a>';
+                        let instagram = '<a href="https://www.instagram.com/asinlondon/" class="social-item"><span class="icon-instagram2"></span></a>';
+                        let endp = '</p>';
+                        let enddiv = '</div>';
+                        let endfooter = '</footer>';
+            
+                        document.getElementById('footersectionid').innerHTML = startfooter + startfooterdiv1 + startfooterdiv2 + startfooterdiv3 + startp + website + twitter + instagram + endp + enddiv + enddiv + enddiv + endfooter + "<br>" + "<br>" + "<br>";
+            
+                    }
+                })
+                document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + "<br><br>";
+                document.getElementById('artcontent').id = 'oldartcontent';
             })
-        })
+        });
 
     console.log('authenitcated: ' + authenticated);
 

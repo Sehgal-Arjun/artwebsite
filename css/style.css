@@ -7,6 +7,10 @@ body {
   font-weight: 300; 
 }
 
+.footerrow {
+  min-height: 300px;
+}
+
 .leftgriddiv{
   display: grid;
   grid-template-columns: 1fr 0fr 1fr;
@@ -713,7 +717,8 @@ a {
     display: block; }
 
 .site-footer {
-  padding: 3em 0; }
+  padding: 3em 0; 
+  max-height: 50px;}
   .site-footer p:last-child {
     margin-bottom: 0; }
   .site-footer .social-item {
