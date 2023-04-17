@@ -49,6 +49,7 @@ onValue(authemailsref, (snapshot) => {
     for (let i = 0; i < emails.length; i++){
         if (emails[i] == "arjun_sehgal@asl.org"){
             emails.splice(i, 1);
+            content.splice(i, 1);
         }
     }
     //console.log(emails);
@@ -66,11 +67,16 @@ onValue(authemailsref, (snapshot) => {
         if (!emails.includes(newauthemail) && newauthemail.length != 0){
             let emailkey = "email" + emails.length;
             let key = 'authenticatedusers/' + emailkey;
-            set(ref(db, key), {
+            if (!emails.includes(document.getElementById('newemail').value)){
+                set(ref(db, key), {
                 email: document.getElementById('newemail').value,
                 index: emails.length
-            });
-            location.reload();
+                }).then(() => {
+                    emails.push(document.getElementById('newemail').value);
+                    content.push(document.getElementById('newemail').value);
+                    location.reload(); 
+                });
+            }
         }
         
     }
@@ -89,6 +95,7 @@ onValue(authemailsref, (snapshot) => {
                     if (emails[i] == element.innerHTML){
                         reference = "email" + i;
                         emails.splice(i, 1);
+                        content.splice(i, 1);
                         emailnum = i;
                     }
                 }
@@ -104,19 +111,20 @@ onValue(authemailsref, (snapshot) => {
                     let deleteref = ref(db, key);
                     set(ref(db, deleteref), {email:null});*/
                     console.log('emailnum: ' + emailnum);
-                    console.log(emails);
-                    for (let i = emailnum; i < emails.length; i++){
-                        let newref = "email" + (emails[i].index - 1);
+                    console.log(content);
+                    for (let i = emailnum; i < content.length; i++){
+                        let newref = "email" + (content[i].index - 1);
                         let newkey = "/authenticatedusers/" + newref + "/";
-                        let oldkey = "/authenticatedusers/email" + emails[i].index + "/";
+                        let oldkey = "/authenticatedusers/email" + content[i].index + "/";
+                        console.log(content[i]);
                         console.log('oldkey: ' + oldkey);
                         remove(ref(db, oldkey)).then(() => {
                             console.log('removed!');
                             set(ref(db, newkey), {
-                                email: emails[i].email,
+                                email: emails[i],
                                 index: i
                             }).then(() => {
-                                location.reload();
+                                //location.reload();
                             })
                         });
                     }
