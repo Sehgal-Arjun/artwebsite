@@ -28,29 +28,40 @@ backbtn.addEventListener('click', function(){
 
 onValue(authemailsref, (snapshot) => {
     const data = snapshot.val();
+    let content = [];
     let emails = [];
     for (let key in data) {
         if (data.hasOwnProperty(key)) {
-            emails.push(data[key]);
+            content.push(data[key]);
         }
     }
-    
+    for (let i = 0; i < content.length; i++){
+      if (typeof content[i] == "string"){
+        emails.push(content[i]);
+      }
+      else{
+        emails.push(content[i].email);
+      }
+    }
+
+    console.log(emails);
+
     for (let i = 0; i < emails.length; i++){
-        if (emails[i].email == "arjun_sehgal@asl.org"){
+        if (emails[i] == "arjun_sehgal@asl.org"){
             emails.splice(i, 1);
         }
     }
     //console.log(emails);
 
     let currenteditorsdiv = document.getElementById('currenteditorscontainer');
-    let htmltext = currenteditorsdiv.innerHTML;
+    let htmltext = '<h3><b>Current Editors:</b></h3><span>arjun_sehgal@asl.org</span><br style="line-height:5px;">';
     for (const element of emails){
-        htmltext = htmltext + '<span class="spanitem">' + element.email + "</span>" +"<br>";
+        htmltext = htmltext + '<span class="spanitem">' + element + "</span>" +"<br>";
     }
     currenteditorsdiv.innerHTML = htmltext;
 
 
-    function addemail(){
+    function addemail(){ // issue is email1 stays even if removing email0!!!!
         let newauthemail = document.getElementById('newemail').value;
         if (!emails.includes(newauthemail) && newauthemail.length != 0){
             let emailkey = "email" + emails.length;
@@ -75,7 +86,7 @@ onValue(authemailsref, (snapshot) => {
                 let emailnum = 0;
                 let reference = "";
                 for (let i = 0; i < emails.length; i++){
-                    if (emails[i].email == element.innerHTML){
+                    if (emails[i] == element.innerHTML){
                         reference = "email" + i;
                         emails.splice(i, 1);
                         emailnum = i;
