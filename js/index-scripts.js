@@ -120,6 +120,7 @@ onAuthStateChanged(auth, (user) => {
                 if (element.email == user.email){
                     teacher = true;
                 }
+                if (authemails.includes(user.email)) { teacher = true; }
             }
             
         }
@@ -265,7 +266,9 @@ onAuthStateChanged(auth, (user) => {
                     if (year == null || year == undefined || year == "0000"){
                         year = "year?";
                     }
-    
+
+                    document.getElementById('artcontent').display = "none";
+                    
                     let startsection = '<section artist = "' + fixedartist + '" class="filterDiv single-portfolio col-sm-4 all ' + tagstring + '">';
                     let endsection = '</section>';
                     let startimgdiv1 = '<div class="relative">';
