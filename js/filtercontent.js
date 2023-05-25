@@ -53,4 +53,11 @@ function searching(){
             console.log('working');
         }
     }
+
+    if (userinput == "" || userinput == " "){
+        document.getElementById("permanentcollectionexamples").style.display = "block";
+    }
+    else{
+        document.getElementById("permanentcollectionexamples").style.display = "none";
+    }
 }
