@@ -177,18 +177,7 @@ onAuthStateChanged(auth, (user) => {
                 console.log(listofart);
 
                 let maindiv = document.getElementById('allart');
-
-                let newclassnamediv = document.createElement('div');
-                newclassnamediv.className = 'section-heading text-center col-md-12 classname';
-                newclassnamediv.id = 'classnamediv';
-                if (listofart[0].class == 'Permanent Collection'){
-                    newclassnamediv.innerHTML = "<h2><strong>" + listofart[0].class + "</strong></h2>";
-                }
-                else{
-                    newclassnamediv.innerHTML = "<h2>" + listofart[0].class + "</h2>";
-                }
-                
-                maindiv.appendChild(newclassnamediv);
+                document.getElementById("allart").innerHTML = document.getElementById("allart").innerHTML + '<h2 class="section-heading text-center col-md-12 classname">' + listofart[0].class + "</h2>";
 
                 let newartdiv = document.createElement('div');
                 newartdiv.className = 'filters-content';
