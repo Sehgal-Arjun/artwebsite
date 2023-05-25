@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
-import { getStorage, ref as sRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-storage.js";
+import { getStorage, ref as sRef, getDownloadURL, uploadBytes, listAll } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-storage.js";
 import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -96,7 +96,7 @@ function newInput(){
             let finalname = "";
 
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let randomkey = ' ';
+            let randomkey = '';
             const charactersLength = characters.length;
             for ( let i = 0; i < 15; i++ ) {
                 randomkey += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -104,7 +104,8 @@ function newInput(){
 
             onValue(artRef, (snapshot) => {
                 const data = snapshot.val();
-                let content = [];
+                const storageReference = getStorage(app);
+                let content = []; // content is from RT database
                 for (var key in data) {
                     if (data.hasOwnProperty(key)) {
                       content.push(data[key]);
@@ -113,28 +114,73 @@ function newInput(){
                 let fixedartistname = artistname.toLowerCase().replace(/ /g,"_");
                 let counter = 0;
                 content.forEach((element) => {
-                    console.log(element);
-                    console.log(fixedartistname);
-                    console.log(element.artist);
+                    //console.log(element);
+                    //console.log(fixedartistname);
+                    //console.log(element.artist);
                     if (fixedartistname == element.artist.toLowerCase().replace(/ /g,"_")){
                         counter++;
                     }
                 })
-                console.log(counter);
+                //console.log(counter);
                 finalname = fixedartistname + counter + randomkey;
-                console.log(finalname);
+                //console.log(finalname);
 
                 const storage = getStorage(app);
                 const storageRef = sRef(storage, finalname);
-                
+
+                const listRef = sRef(storage, '/');
+
+                listAll(listRef)
+                .then((res) => {
+                    console.log(res.items);
+                    console.log("randomkey: " + randomkey);
+                    let includesorno = false;
+
+                    res.items.forEach((itemRef) => {
+                        if (itemRef.name.includes(randomkey)){
+                            includesorno = true;
+                        }
+                    })
+
+                    if (!includesorno){
+                        console.log("RUNNIGN THIS !!!!");
+                        const file = document.querySelector('#artimage').files[0];
+                        uploadBytes(storageRef, file).then((snapshot) => {
+                            console.log('Uploaded file!');
+                        });
+                        
+                        setTimeout( function() {
+
+                            const pathRef = sRef(storageReference, finalname);
+                            getDownloadURL(pathRef)
+                            .then((arturl) => {
+                                set(ref(db, 'art/' + finalname), {
+                                    artist: artistname,
+                                    location: artlocation,
+                                    url : arturl,
+                                    class: artclass,
+                                    year: year,
+                                    id: randomkey
+                                    //available: availability
+                                });
+                            })
+                            setTimeout(() => {
+                                location.reload();
+                            }, 500);
+                        }, 4000)
+                    }
+                }).catch((error) => {
+                    // Uh-oh, an error occurred!
+                    console.log(err.message);
+                });
+                /*
                 const file = document.querySelector('#artimage').files[0];
-                let currentimages = 
                 uploadBytes(storageRef, file).then((snapshot) => {
                     console.log('Uploaded file!');
                 });
                 
                 setTimeout( function() {
-                    const storageReference = getStorage(app);
+
                     const pathRef = sRef(storageReference, finalname);
                     getDownloadURL(pathRef)
                     .then((arturl) => {
@@ -149,9 +195,10 @@ function newInput(){
                         });
                     })
                     setTimeout(() => {
-                        location.reload();
+                        //location.reload();
                     }, 500);
                 }, 4000)
+*/
             });
             
         }

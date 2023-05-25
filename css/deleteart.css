@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+*, *:after, *:before {
+	box-sizing: border-box;
+}
+
+.action-button {
+	font: inherit;
+	font-size: 1.25rem;
+	padding: 1em;
+	width: 100%;
+	font-weight: 500;
+	background-color: #73A0AD;
+	border-radius: 6px;
+	color: #FFF;
+	border: 0;
+}
+
+
+
+
+.container {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 34.37em;
+  position: relative;
+  margin: 3.12em auto;
+  padding: 3.12em 1.25em;
+  border-radius: 0.43em;
+  box-shadow: 0 1.25em 2.18em rgb(1, 28, 71, 0.3);
+}
+
+/*COMMENT THIS OUT IF YOU WANT TO CHECK INPUT*/
+input[type="file"] {
+  display: none;
+}
+
+.row{
+	display: flex;
+	justify-content: center;
+	border: #73A0AD;
+	border-radius: 5px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+label {
+  display: block;
+  position: relative;
+  background-color: #AEBC40;
+  color: #ffffff;
+  font-size: 1.12em;
+  font-weight: 500;
+  text-align: center;
+  width: 18.75em;
+  padding: 1.12em 0;
+  margin: auto;
+  border-radius: 0.31em;
+  cursor: pointer;
+}
+#num-of-files {
+  font-weight: 400;
+  text-align: center;
+  margin: 1.25em 0 1.87em 0;
+}
+ul {
+  list-style-type: none;
+}
+.container li {
+  font-weight: 500;
+  background-color: #eff5ff;
+  color: #AEBC40;
+  margin-bottom: 1em;
+  padding: 1.1em 1em;
+  border-radius: 0.3em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.imgcontainer{
+	height:300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.results{
+    display: grid;
+    grid-template-columns: 1fr 5fr;  
+    grid-gap: 50px;
+    overflow: hidden;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+}
+
+.nameauthor{
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.h1{
+    overflow: hidden;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	vertical-align: middle;
+}
+
+p{
+	vertical-align: middle;
+}
+
+.takefullspace{
+	min-width:30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+
+}
+
+img{
+	vertical-align: middle;
+
+}
+
+.centerthis{
+	display:flex;
+	justify-content: center;
+}
