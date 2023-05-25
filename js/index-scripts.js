@@ -331,12 +331,19 @@ onAuthStateChanged(auth, (user) => {
         console.log("auofh");
         location.replace("./addeditors.html");
     }
+
+    function deleteartfunction(){
+        location.replace("./deleteart.html");
+    }
     
     let uploadbutton = document.getElementById("uploadnewworkbutton");
     uploadbutton.addEventListener('click', uploadfunction);
 
     let neweditorbutton = document.getElementById("addneweditorsbutton");
     neweditorbutton.addEventListener('click', neweittorfunction);
+
+    let deleteartbutton = document.getElementById("deleteartbutton");
+    deleteartbutton.addEventListener('click', deleteartfunction);
     });
 
 });

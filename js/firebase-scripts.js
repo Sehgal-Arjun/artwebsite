@@ -94,6 +94,14 @@ function newInput(){
         }
         else{
             let finalname = "";
+
+            const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let randomkey = ' ';
+            const charactersLength = characters.length;
+            for ( let i = 0; i < 15; i++ ) {
+                randomkey += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+
             onValue(artRef, (snapshot) => {
                 const data = snapshot.val();
                 let content = [];
@@ -113,13 +121,14 @@ function newInput(){
                     }
                 })
                 console.log(counter);
-                finalname = fixedartistname + counter;
+                finalname = fixedartistname + counter + randomkey;
                 console.log(finalname);
 
                 const storage = getStorage(app);
                 const storageRef = sRef(storage, finalname);
                 
                 const file = document.querySelector('#artimage').files[0];
+                let currentimages = 
                 uploadBytes(storageRef, file).then((snapshot) => {
                     console.log('Uploaded file!');
                 });
@@ -134,7 +143,8 @@ function newInput(){
                             location: artlocation,
                             url : arturl,
                             class: artclass,
-                            year: year
+                            year: year,
+                            id: randomkey
                             //available: availability
                         });
                     })
