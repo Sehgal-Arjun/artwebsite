@@ -272,31 +272,30 @@ onAuthStateChanged(auth, (user) => {
                     let locationtext = '<div class="cat">' + element.location +" "+ "‧" + " " + year + '</div>';
             
                     document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + startsection + startimgdiv1 + startimgdiv2 + middleimgdiv + img + endimgdiv2 + endimgdiv1 + startdiv3 + artistname + locationtext + enddiv3 + endsection;
-
-                    //console.log(startsection);
-            
-                    let currimages = 0;
-                    //console.log(document.getElementsByTagName('img').length);
-            
-                    if(document.getElementsByTagName('img').length == content.length){
-                        
-                        //footer creation here!
-                        let startfooter = '<footer class="site-footer" id = "footer">';
-                        let startfooterdiv1 = '<div class="container">';
-                        let startfooterdiv2 = '<div class=" mb-5">';
-                        let startfooterdiv3 = '<div class="col-md-12 text-center">';
-                        let startp = '<p>';
-                        let website = '<a href="https://www.facebook.com/americanschoolinlondon" class="social-item"><span class="icon-facebook2"></span></a>';
-                        let twitter = '<a href="https://twitter.com/aslnews" class="social-item"><span class="icon-twitter"></span></a>';
-                        let instagram = '<a href="https://www.instagram.com/asinlondon/" class="social-item"><span class="icon-instagram2"></span></a>';
-                        let endp = '</p>';
-                        let enddiv = '</div>';
-                        let endfooter = '</footer>';
-            
-                        document.getElementById('footersectionid').innerHTML = startfooter + startfooterdiv1 + startfooterdiv2 + startfooterdiv3 + startp + website + twitter + instagram + endp + enddiv + enddiv + enddiv + endfooter + "<br>" + "<br>" + "<br>";
-            
-                    }
                 })
+
+                //console.log(document.getElementsByTagName('img').length);
+                console.log("len: " + document.getElementsByTagName('img').length);
+                console.log("contentlen: " + content.length);
+                if(document.getElementsByTagName('img').length - 8 == content.length){ // -8 bc there's 8 non-dynamic images
+                    //footer creation here!
+                    let startfooter = '<footer class="site-footer" id = "footer">';
+                    let startfooterdiv1 = '<div class="container">';
+                    let startfooterdiv2 = '<div class=" mb-5">';
+                    let startfooterdiv3 = '<div class="col-md-12 text-center">';
+                    let startp = '<p>';
+                    let website = '<a href="https://www.facebook.com/americanschoolinlondon" class="social-item"><span class="icon-facebook2"></span></a>';
+                    let twitter = '<a href="https://twitter.com/aslnews" class="social-item"><span class="icon-twitter"></span></a>';
+                    let instagram = '<a href="https://www.instagram.com/asinlondon/" class="social-item"><span class="icon-instagram2"></span></a>';
+                    let endp = '</p>';
+                    let enddiv = '</div>';
+                    let endfooter = '</footer>';
+        
+                    document.getElementById('footersectionid').innerHTML = startfooter + startfooterdiv1 + startfooterdiv2 + startfooterdiv3 + startp + website + twitter + instagram + endp + enddiv + enddiv + enddiv + endfooter + "<br>" + "<br>" + "<br>";
+        
+                }
+
+
                 document.getElementById('artcontent').innerHTML = document.getElementById('artcontent').innerHTML + "<br><br>";
                 document.getElementById('artcontent').id = 'oldartcontent';
             })
