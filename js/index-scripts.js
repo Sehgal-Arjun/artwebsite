@@ -81,6 +81,7 @@ onAuthStateChanged(auth, (user) => {
         htmltext.innerHTML = "Sign out with Google";
         console.log('user is signed in!');
         loggedin = true;
+        localStorage.setItem("useremail", user.email);
         if(user.email.slice(-7) == "asl.org"){
             if (authenticated == false){
                 authenticated = true;
@@ -95,6 +96,7 @@ onAuthStateChanged(auth, (user) => {
     else{ // user is signed out
         htmltext.innerHTML = "Sign in with Google";
         loggedin = false;
+        localStorage.setItem("useremail", "");
         if (authenticated == true){
             console.log('hi guys');
             authenticated == false;
