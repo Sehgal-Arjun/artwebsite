@@ -89,50 +89,52 @@ onValue(authemailsref, (snapshot) => {
         let spans = document.getElementsByClassName("spanitem");
         for (const element of spans){
             element.onclick = function(){
-                let emailnum = 0;
-                let reference = "";
-                for (let i = 0; i < emails.length; i++){
-                    if (emails[i] == element.innerHTML){
-                        reference = "email" + i;
-                        emails.splice(i, 1);
-                        content.splice(i, 1);
-                        emailnum = i;
+                if (confirm("Are you sure you want to remove this editor?")){
+                    let emailnum = 0;
+                    let reference = "";
+                    for (let i = 0; i < emails.length; i++){
+                        if (emails[i] == element.innerHTML){
+                            reference = "email" + i;
+                            emails.splice(i, 1);
+                            content.splice(i, 1);
+                            emailnum = i;
+                        }
                     }
-                }
 
-                if (reference != ""){
-                    let key = "/authenticatedusers/" + reference + "/";
-                    console.log('key: ' + key);
-                    remove(ref(db, key)).then(() => { // eg, key could be "/authenticatedusers/email0/"
-                        console.log('removed!');
-                    });
-                    /*
-                    console.log(key);
-                    let deleteref = ref(db, key);
-                    set(ref(db, deleteref), {email:null});*/
-                    console.log('emailnum: ' + emailnum);
-                    console.log(content);
-                    for (let i = emailnum; i < content.length; i++){
-                        let newref = "email" + (content[i].index - 1);
-                        let newkey = "/authenticatedusers/" + newref + "/";
-                        let oldkey = "/authenticatedusers/email" + content[i].index + "/";
-                        console.log(content[i]);
-                        console.log('oldkey: ' + oldkey);
-                        remove(ref(db, oldkey)).then(() => {
+                    if (reference != ""){
+                        let key = "/authenticatedusers/" + reference + "/";
+                        console.log('key: ' + key);
+                        remove(ref(db, key)).then(() => { // eg, key could be "/authenticatedusers/email0/"
                             console.log('removed!');
-                            set(ref(db, newkey), {
-                                email: emails[i],
-                                index: i
-                            }).then(() => {
-                                //location.reload();
-                            })
                         });
-                    }
+                        /*
+                        console.log(key);
+                        let deleteref = ref(db, key);
+                        set(ref(db, deleteref), {email:null});*/
+                        console.log('emailnum: ' + emailnum);
+                        console.log(content);
+                        for (let i = emailnum; i < content.length; i++){
+                            let newref = "email" + (content[i].index - 1);
+                            let newkey = "/authenticatedusers/" + newref + "/";
+                            let oldkey = "/authenticatedusers/email" + content[i].index + "/";
+                            console.log(content[i]);
+                            console.log('oldkey: ' + oldkey);
+                            remove(ref(db, oldkey)).then(() => {
+                                console.log('removed!');
+                                set(ref(db, newkey), {
+                                    email: emails[i],
+                                    index: i
+                                }).then(() => {
+                                    //location.reload();
+                                })
+                            });
+                        }
 
+                    }
+                    
+                    console.log(element.innerHTML);
+                    //location.reload();
                 }
-                
-                console.log(element.innerHTML);
-                //location.reload();
             }
         }
     }, 100);
