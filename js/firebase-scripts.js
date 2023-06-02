@@ -165,7 +165,8 @@ function newInput(){
                                 });
                             })
                             setTimeout(() => {
-                                location.reload();
+                                document.getElementById("inputform").reset();
+                                alert("Uploaded! :)");
                             }, 500);
                         }, 4000)
                     }
