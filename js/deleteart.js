@@ -101,7 +101,7 @@ onValue(artRef, (snapshot) => {
                         let deleteref = sRef(storage, filename);
                         console.log("deleted from RT DB!");
                         deleteObject(deleteref).then(() => {
-                            console.log("successfully deleted!");
+                            alert("Successfully deleted!");
                             location.reload();
                         }).catch((error) => {
                             console.log("Error! " + error.message);

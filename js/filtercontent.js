@@ -1,16 +1,34 @@
 filterSelection("all")
 function filterSelection(c) {
   var x, i;
+  let listofdisplayingart = [];
   x = document.getElementsByClassName("filterDiv");
+  console.log("Filtering!");
+  if (c != "all"){
+    document.getElementById("permanentcollectionexamples").style.display = "none";
+  }
+  else{
+    document.getElementById("permanentcollectionexamples").style.display = "block";
+  }
   // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
   for (i = 0; i < x.length; i++) {
     x[i].style.display = 'block';
+    listofdisplayingart.push(x[i]);
   }
   for (i = 0; i < x.length; i++) {
     if (!(x[i].classList.contains(c))){
         console.log(x[i]);
         x[i].style.display = 'none';
     }
+  }
+
+  console.log(listofdisplayingart);
+
+  let sectionscollection = document.getElementsByClassName("section-heading text-center col-md-12 classname");
+  var sections = Array.prototype.slice.call( sectionscollection )
+  sections.splice(0, 1);
+  for (let i = 0; i < sections.length; i++){
+    console.log(sections[i].innerHTML);
   }
 }
 
