@@ -255,7 +255,7 @@ onAuthStateChanged(auth, (user) => {
                     
                     let year = element.year;
                     if (year == null || year == undefined || year == "0000"){
-                        year = "year?";
+                        year = "2023";
                     }
 
                     document.getElementById('artcontent').display = "none";
